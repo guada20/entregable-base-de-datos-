@@ -1,0 +1,93 @@
+create database Supermercado 
+use Supermercado
+
+create table productos(
+Id_producto int primary key not null,
+Nombre_producto varchar(50) not null,
+Precio_compra int not null,
+Precio_Venta int not null,
+Ganancia as Precio_Venta - Precio_Compra)
+
+insert into productos values(101,'Leche colanta litro',2000,3000)
+insert into productos values(102,'Papitas margarita',1800,2500)
+insert into productos values(103,'Nucita',300,700)
+insert into productos values(104,'Bandeja fresas',2500,4500)
+insert into productos values(105,'Jabon polvo 1000g',4000,6500)
+insert into productos values(106,'lata atun aburra',4000,5000)
+insert into productos values(107,'libra arroz diana',2000,3500)
+insert into productos values(108,'Cocacola 1.5 litros',3000,4800)
+insert into productos values(109,'Quesito colanta grande',2000,4000)
+insert into productos values(110,'Libra pierna cerdo',13000,19000)
+select*from productos
+
+create table Categorias(
+Id_categoria int primary key not null,
+Id_producto int foreign key references productos(Id_producto),
+Nombre_Categoria varchar(50))
+
+insert into Categorias values(01,101,'Lacteos')
+insert into Categorias values(02,102,'Mekato')
+insert into Categorias values(03,104,'Frutas')
+insert into Categorias values(04,103,'Mekato')
+insert into Categorias values(05,105,'Aseo')
+insert into Categorias values(06,106,'Enlatados')
+insert into Categorias values(07,107,'Granos')
+insert into Categorias values(08,108,'Bebidas')
+insert into Categorias values(09,109,'Lacteos')
+insert into Categorias values(10,110,'Carnicos')
+select*from Categorias
+
+create table Provedor(
+Id_provedor int primary key not null,
+Nombre varchar(50),
+Telefono int,
+Correo varchar(70),
+Direccion varchar(70),
+Id_producto int foreign key references productos(Id_producto),
+Id_categoria int foreign key references Categorias(Id_categoria))
+insert into Provedor values(110,'Colanta',6013090,'Colantasabemas@gamil','cra20A 10-20',101,01)
+insert into Provedor values(111,'Margarita',6013090,'Margaritapapas@gmail','cra50 30-40',102,02)
+insert into Provedor values(112,'Fruver',6013050,'Fruverdelcampo@gamil','cra70 67-90',103,03)
+insert into Provedor values(113,'Colombina',6015060,'Colombinadulces@gmail','crCl. 72 #447',104,04)
+insert into Provedor values(114,'FAB',6013090,'FABaseo@gamil','cra45A 10-20',105,05)
+insert into Provedor values(115,'La española',6017090,'laespañolaenlatados@gamil','cra20A 56-20',106,06)
+insert into Provedor values(116,'Diana',6013090,'Dianavitamor@gamil','cra20B 10-20',107,07)
+insert into Provedor values(117,'cocacola',6013090,'Cocacola@gamil','cra20A 78-20',108,08)
+insert into Provedor values(118,'Colanta',6013090,'Colantasabemas@gamil','cra20A 10-20',109,09)
+insert into Provedor values(119,'Colanta',6013090,'Colantasabemas@gamil','cra20A 10-20',110,10)
+select*from Provedor
+create table Factura_provedor(
+Id_factura int primary key not null,
+Fecha_factura date,
+Fecha_Vencimiento date,
+valor int,
+Id_provedor int foreign key references Provedor(Id_provedor))
+insert into Factura_provedor values(1231,'2022-11-12','2022-12-12',545000,110)
+insert into Factura_provedor values(1232,'2022-10-05','2022-11-05',1000000,111)
+insert into Factura_provedor values(1233,'2022-05-30','2022-06-30',5500000,112)
+insert into Factura_provedor values(1234,'2022-11-01','2022-12-01',345000,113)
+insert into Factura_provedor values(1235,'2022-07-07','2022-08-07',3123000,114)
+insert into Factura_provedor values(1236,'2022-09-25','2022-10-31',5450000,115)
+insert into Factura_provedor values(1237,'2022-01-26','2022-02-26',220000,116)
+insert into Factura_provedor values(1238,'2022-02-12','2022-03-12',768000,117)
+insert into Factura_provedor values(1239,'2022-08-15','2022-09-15',545000,118)
+insert into Factura_provedor values(1240,'2022-11-12','2022-12-12',5450000,119)
+select*from Factura_provedor
+
+create table Inventario(
+Id_inventario varchar(30) primary key,
+fecha_inventario date,
+Id_producto int foreign key references productos(Id_producto),
+unidades_disponible int,
+Id_categoria int foreign key references Categorias(Id_categoria))
+
+insert into Inventario values('A01','2022-11-15',101,32,01)
+insert into Inventario values('A02','2022-11-15',102,6,02)
+insert into Inventario values('A03','2022-11-15',103,67,03)
+insert into Inventario values('A04','2022-11-15',104,78,04)
+insert into Inventario values('A05','2022-11-15',105,56,05)
+insert into Inventario values('A06','2022-11-15',106,12,06)
+insert into Inventario values('A07','2022-11-15',107,25,07)
+insert into Inventario values('A08','2022-11-15',108,2,08)
+insert into Inventario values('A09','2022-11-15',109,52,09)
+insert into Inventario values('A19','2022-11-15',110,12,10)
